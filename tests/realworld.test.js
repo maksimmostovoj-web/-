@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 
+//Переменные
+
 //todo Нейминг теста
 test("Пользователь может зарегистрироваться используя email и пароль", async ({
   page,
