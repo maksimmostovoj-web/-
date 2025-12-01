@@ -2,18 +2,10 @@ import { test, expect } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 
 // Переменные
-const user = {
-  email: faker.internet.email({ provider: "qa.guru" }),
-  name: faker.person.fullName(),
-  password: faker.internet.password({ length: 10 }),
-  NewVersionName: faker.person.fullName(),
-};
-/*
 let email = faker.internet.email({ provider: "qa.guru" });
 let name = faker.person.fullName(); // 'Allen Brown'
 let password = faker.internet.password({ length: 10 });
 let NewVersionName = faker.person.fullName();
-*/
 
 const url = "https://realworld.qa.guru/";
 
@@ -32,25 +24,23 @@ const getRegistration = async (page, email, name, password, url) => {
 test("Пользователь может зарегистрироваться используя email и пароль", async ({
   page,
 }) => {
-  getRegistration(page, user.email, user.name, user.password, url);
-  await expect(page.getByRole("navigation")).toContainText(user.name);
+  getRegistration(page, email, name, password, url);
+  await expect(page.getByRole("navigation")).toContainText(name);
 });
 
 test("Пользователь может изменить свое имя в профиле", async ({ page }) => {
-  getRegistration(page, user.email, user.name, user.password, url);
-  await expect(page.getByRole("navigation")).toContainText(user.name);
+  getRegistration(page, email, name, password, url);
+  await expect(page.getByRole("navigation")).toContainText(name);
   // изменение имени
-  await page.getByText(user.name).click();
+  await page.getByText(name).click();
   await page.getByRole("link", { name: " Settings" }).click();
   await page.getByRole("textbox", { name: "Your Name" }).click();
-  await page
-    .getByRole("textbox", { name: "Your Name" })
-    .fill(user.NewVersionName);
+  await page.getByRole("textbox", { name: "Your Name" }).fill(NewVersionName);
   await page.getByRole("button", { name: "Update Settings" }).click();
   // проверка изменения имени
-  await page.getByText(user.NewVersionName).click();
+  await page.getByText(NewVersionName).click();
   await page.getByRole("link", { name: " Profile" }).click();
   await expect(
-    page.getByRole("heading", { name: user.NewVersionName })
+    page.getByRole("heading", { name: NewVersionName })
   ).toBeVisible();
 });
