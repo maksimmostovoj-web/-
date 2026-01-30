@@ -13,6 +13,6 @@ export class RegisterPage {
     await this.emailInput.fill(email);
     await this.passwordInput.click();
     await this.passwordInput.fill(password);
-    await this.signupButton.click();
+    this.signupButton.click();
   }
 }
