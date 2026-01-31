@@ -65,10 +65,7 @@ test("Пользователь может изменить свое имя в п
   await expect(homePage.profileName).toContainText(NewVersionName);
 
   // Переход на свой профиль через навигацию
-  await homePage.profileName.click();
-
-  // Используем локатор из snapshot для перехода на профиль
-  await page.getByRole("link", { name: " Profile" }).click();
+  await homePage.goToProfile();
 
   // Проверка изменения имени на странице профиля
   await expect(
@@ -213,17 +210,8 @@ test("Пользователь удаляет статью", async ({ page }) =>
   // Сохранение URL статьи для проверки
   const postUrl = page.url();
 
-  // Диалог
-  page.on("dialog", async (dialog) => {
-    await dialog.accept();
-  });
-
-  // Удаление статьи
-  await page
-    .locator("button")
-    .filter({ hasText: "Delete Article" })
-    .first()
-    .click();
+  // Д
+  await articlePage.deleteArticle(0);
 
   await page.waitForTimeout(2000); // Ожидание
 
