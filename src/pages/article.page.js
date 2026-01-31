@@ -2,7 +2,7 @@ export class ArticlePage {
   constructor(page) {
     this.page = page;
 
-    // Локаторы
+    // Локаторы для создания статьи
     this.newArticleLink = page.getByRole("link", { name: " New Article" });
     this.articleTitleInput = page.getByRole("textbox", {
       name: "Article Title",
@@ -20,6 +20,12 @@ export class ArticlePage {
     this.deleteArticleButtons = page.getByRole("button", {
       name: " Delete Article",
     });
+
+    // Локаторы для комментариев
+    this.commentInput = page.getByRole("textbox", {
+      name: "Write a comment...",
+    });
+    this.postCommentButton = page.getByRole("button", { name: "Post Comment" });
   }
 
   async createArticle(title, about, content, tags) {
@@ -52,5 +58,11 @@ export class ArticlePage {
       });
       this.deleteArticleButtons.nth(articleIndex).click();
     });
+  }
+
+  // Метод для добавления комментария
+  async addComment(commentText) {
+    await this.commentInput.fill(commentText);
+    await this.postCommentButton.click();
   }
 }
